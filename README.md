@@ -14,4 +14,7 @@ TBD
 AWS Codes:
 
 
-Muhammad Bilal Khan: PC1M7BFN0J895XP 
+Muhammad Bilal Khan:  XXXXXXXXXXX
+
+For Credit details please Contact administrator on Slack
+https://app.slack.com/huddle/T01BN24U54L/C08SF5BUGN4
