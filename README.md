@@ -29,5 +29,6 @@ Generating Resume:
 - ![image](https://github.com/user-attachments/assets/5965a7a8-7fef-472d-9de6-96a1ce409ae7)
 
 New Resume:
-- 
+- ![image](https://github.com/user-attachments/assets/a5c68963-18e2-4f8d-b161-049f9e74ede5)
+
 
