@@ -32,7 +32,7 @@ New Resume:
 - ![image](https://github.com/user-attachments/assets/a5c68963-18e2-4f8d-b161-049f9e74ede5)
 
 New content:
-- ![image](https://github.com/user-attachments/assets/d5c42c7f-dc27-44d4-89c6-3f4a2fc2afe0)
+- ![image](https://github.com/user-attachments/assets/e7054e0f-72f3-4517-8cff-fea3d7ddbb5c)
 
 
 
