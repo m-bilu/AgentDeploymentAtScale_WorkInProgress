@@ -22,6 +22,7 @@ def parse_resume_node(state: AgentState) -> AgentState:
     2) Language of user, prose
     3) Combine sections with existing info from datasource (excel sheet?)
     '''
+    print('parsing resume ...')
     state['resume'] = parse_resume.remove_unnecessary_tags(content=state['resume'])
     sections = parse_resume.parse_sections(state['resume'])
     for section, tex in sections.items():
@@ -45,6 +46,7 @@ def parse_jd_node(state: AgentState) -> AgentState:
     - RAG for company info, uncommon terms, similar job postings
     - use Output for Post Parse Validation (is the llm's output in the jd)
     '''
+    print('parsing jd ...')
     chains = parse_jd.get_details_llmchain()
 
     insights = {target : chain.invoke({
@@ -66,6 +68,7 @@ def identify_pros_cons_node(state: AgentState) -> AgentState:
     NOTE: for demo, if changes require info not in resume/datasource, will create new info
         for resume edits (may not be true).
     '''
+    print('gap analysis ...')
     chain = gap_analysis.get_suggestions_llmchains()
 
     insight = chain.invoke({
@@ -83,6 +86,7 @@ def make_resume_edits_node(state: AgentState) -> AgentState:
     This node applies the changes from previous node to latex document
     while maintaining language, structure of original resume.
     '''
+    print('making resume edits, rendering ...')
     chain = edit_resume.get_resume_edit_chain()
 
     latex = chain.invoke({

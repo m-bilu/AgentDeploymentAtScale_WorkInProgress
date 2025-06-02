@@ -2,8 +2,10 @@ import streamlit as st
 import tempfile
 import subprocess
 from pathlib import Path
+from streamlit_pdf_viewer import pdf_viewer
 
 from graph import modify_resume
+
 
 def render_pdf(latex_code: str) -> bytes:
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -13,18 +15,27 @@ def render_pdf(latex_code: str) -> bytes:
         with open(tex_path, "w") as f:
             f.write(latex_code)
         
+        print(f"Temp directory before pdflatex: {tmpdir}")
+        print("Contents before:", list(Path(tmpdir).iterdir()))
+        
         try:
+            command = ["pdflatex", "-interaction=nonstopmode", str(tex_path)]
+            print(command)
+
             subprocess.run(
-                ["pdflatex", "-interaction=nonstopmode", str(tex_path)],
-                cwd=tmpdir,
-                check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
+                command,
+                cwd=tmpdir
             )
+            
+            print(f"Temp directory after pdflatex: {tmpdir}")
+            print("Contents after:", list(Path(tmpdir).iterdir()))
+            
             with open(pdf_path, "rb") as f:
                 return f.read()
         except subprocess.CalledProcessError:
+            print(f"pdflatex command failed in directory: {tmpdir}")
             return None
+        
 
 st.title("🧠 LaTeX Resume Tailoring Tool")
 
@@ -40,11 +51,13 @@ if uploaded_tex and job_description:
     old_pdf = render_pdf(old_tex_code)
     if old_pdf:
         st.download_button("Download Original PDF", data=old_pdf, file_name="original_resume.pdf")
-        st.pdf(old_pdf)
+        pdf_viewer(old_pdf)
     else:
         st.error("Failed to render original LaTeX as PDF.")
 
     if st.button("✏️ Generate Edited Resume"):
+        st.info("Generating edited resume...")
+
         edited_tex_code = modify_resume(old_tex_code, job_description)
 
         st.subheader("✅ Edited Resume (PDF)")
@@ -52,6 +65,6 @@ if uploaded_tex and job_description:
         if new_pdf:
             st.download_button("Download Edited PDF", data=new_pdf, file_name="edited_resume.pdf")
             st.download_button("Download Edited LaTeX", data=edited_tex_code, file_name="edited_resume.tex")
-            st.pdf(new_pdf)
+            pdf_viewer(new_pdf)
         else:
             st.error("Failed to render edited LaTeX as PDF.")
