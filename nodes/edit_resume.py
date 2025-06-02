@@ -37,6 +37,7 @@ def get_resume_edit_chain(llm: BaseChatModel | None = None) -> RunnableSequence:
             - Each section should have a resumeSubheadingListStart, with jobs as resumeSubheadings.
             - Each job should have resumeItemListStart and all the bullet points go under this, as resumeItem tags.
             - All vspace tags, href tags and textcolor tags from old resume should be copied to new resume
+            - If two bullet points for the same job can be merged, such that the new bullet point is smaller than 250 characters, then do it.
 
         Do not make any of these mistakes:
         - Do NOT hallucinate new job roles or companies
