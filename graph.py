@@ -132,5 +132,8 @@ def init_agent() -> CompiledStateGraph:
 
     return agent_instance
 
-
+def modify_resume(old_resume: str, jd: str) -> str:
+    agent = init_agent()
+    new_resume = agent.invoke({ 'resume' : old_resume, 'jd' : jd })['new_resume']
+    return new_resume
 

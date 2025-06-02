@@ -5,3 +5,5 @@ cohere
 
 langgraph
 langchain-community
+
+streamlit
