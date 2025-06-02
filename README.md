@@ -17,7 +17,7 @@ Team Participant Names:
 This repo is for an AI Agent built using LangChain, that does two things:
 - Has tools to modify and edit latex documents
 - Fine-tuned to modify latex-written resumes to model a given job description, while maintaining points made in original resume
-- Link to tool: http://44.210.111.43:8501/
+- Link to tool: http://44.210.111.43:8501/ [DevOPS changed pushed into the CICD-Branch]
 
 Opening Page:
 - ![image](https://github.com/user-attachments/assets/90c66c1f-c376-4b2a-a20d-b6612d771563)
