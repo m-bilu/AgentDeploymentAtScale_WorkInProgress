@@ -11,4 +11,4 @@ export COHERE_API_KEY=$(cat ./.secrets/cohere_key.txt)
 sudo apt update
 sudo apt install -y texlive-base
 
-streamlit run streamlit.py
+streamlit run streamlit.py --server.port=8501 --server.address=0.0.0.0
