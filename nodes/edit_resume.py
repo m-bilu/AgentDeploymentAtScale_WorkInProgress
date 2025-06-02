@@ -34,7 +34,14 @@ def get_resume_edit_chain(llm: BaseChatModel | None = None) -> RunnableSequence:
         - Insert new bullet points under correct roles/sections
         - Add missing keywords subtly if possible
         - Preserve LaTeX formatting and syntax
+            - Each section should have a resumeSubheadingListStart, with jobs as resumeSubheadings.
+            - Each job should have resumeItemListStart and all the bullet points go under this, as resumeItem tags.
+            - All vspace tags, href tags and textcolor tags from old resume should be copied to new resume
+
+        Do not make any of these mistakes:
         - Do NOT hallucinate new job roles or companies
+
+
 
         Return only the **edited LaTeX document** as a string (no markdown, no explanation).
 

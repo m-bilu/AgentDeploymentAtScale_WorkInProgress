@@ -32,6 +32,10 @@ def get_suggestions_llmchains(
         2. weak_bullets: A list of resume bullet points that should be rewritten for better alignment. Include the section, role, company, index, and a suggested replacement.
         3. additional_bullets: New bullet points (max 2) that could be added under existing roles to better match the JD.
 
+        Note: For each missing_keyword, weak_bullets or additional_bullets entry, include the resume section, role and company where the bullet is relevant.
+
+        WARNING: DO NOT INCLUDE ANY EXPLANATION, COMMENTS. ONLY THE JSON
+
         """
 
     prompt = ChatPromptTemplate.from_messages([

@@ -75,7 +75,7 @@ def identify_pros_cons_node(state: AgentState) -> AgentState:
 
     output = re.sub(r"^```json|```$", "", insight.strip()).strip()
 
-    return {**state, "suggestions": json.loads(output)}
+    return {**state, "suggestions": output}
     
 
 def make_resume_edits_node(state: AgentState) -> AgentState:
@@ -91,17 +91,17 @@ def make_resume_edits_node(state: AgentState) -> AgentState:
         "suggestions_json" : state["suggestions"]
     }).content
 
-    return {**state, "new_resume_unvalidated" : latex}
+    return {**state, "new_resume" : latex}
 
-def final_validator_node(state: AgentState) -> AgentState:
-    '''
-    This node takes the final new resume and cleans up any pre-existing latex issues
-        - misspellings, latex bugs, unneeded comments
-        - also addresses any new issues that may have appeared as hallucinations between resume and new_resume
-    '''
-    new_resume=latex_validator.get_latex_no_comments(state['new_resume_unvalidated'])
+# def final_validator_node(state: AgentState) -> AgentState:
+#     '''
+#     This node takes the final new resume and cleans up any pre-existing latex issues
+#         - misspellings, latex bugs, unneeded comments
+#         - also addresses any new issues that may have appeared as hallucinations between resume and new_resume
+#     '''
+#     new_resume=latex_validator.get_latex_no_comments(state['new_resume_unvalidated'])
 
-    return {**state, "new_resume" : new_resume}
+#     return {**state, "new_resume" : new_resume}
 
 ##
 ## --- Agent Initialization --- 
@@ -118,14 +118,15 @@ def init_agent() -> CompiledStateGraph:
     graph.add_node("parse_jd_node", parse_jd_node)
     graph.add_node("identify_pros_cons_node", identify_pros_cons_node)
     graph.add_node("make_resume_edits_node", make_resume_edits_node)
-    graph.add_node("final_validator_node", final_validator_node)
+#    graph.add_node("final_validator_node", final_validator_node)
 
     graph.add_edge(START, "parse_resume_node")
     graph.add_edge("parse_resume_node", "parse_jd_node")
     graph.add_edge("parse_jd_node", "identify_pros_cons_node")
     graph.add_edge("identify_pros_cons_node", "make_resume_edits_node")
-    graph.add_edge("make_resume_edits_node", "final_validator_node")
-    graph.add_edge("final_validator_node", END)
+    graph.add_edge("make_resume_edits_node", END)
+    # graph.add_edge("make_resume_edits_node", "final_validator_node")
+    # graph.add_edge("final_validator_node", END)
 
     agent_instance = graph.compile()
 
